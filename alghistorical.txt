@@ -1,0 +1,12 @@
+O, Abarrito Smith, 1000
+O, Romaira Ortiz, 2300
+D, 0000000001, 2000
+O, Maria Sevengo, 5000
+W, 0000000002, 100
+O, Pepe Jarana, 10000
+D, 0000000001, 5000
+W, 0000000003, 500
+B, 0.5
+O, Rogelino Castro, 4000
+D, 0000000004, 500
+W, 0000000001, 200

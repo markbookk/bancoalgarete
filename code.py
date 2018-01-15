@@ -14,6 +14,7 @@ Example:
 O, Abarrito Smith, 1000.00
 '''
 
+import sys
 import time
 import ast
 import os
@@ -209,7 +210,7 @@ customerList = []
 for line in lines:
 	line = line.replace("\n", "").replace("[","").replace("]", "").replace("\'", "")
 	outputArray = line.split(", ")
-	print outputArray[0] + " \t\t\t\t\t" + outputArray[1] + " \t\t\t\t\t" + outputArray[2]
+	print outputArray[0] + " \t\t\t\t\t" + outputArray[1] + " \t\t\t\t\t$" + outputArray[2]
 	#Add to 'customerList[]' all of the customer names to sort.
 	customerList.append(outputArray[1])
 	#print '%s \t\t\t\t\t%s \t\t\t\t\t%s \t\t\t\t\t' % (outputArray[0], outputArray[1], outputArray[2])
@@ -227,7 +228,7 @@ while (count < len(customerList)):
 		line = line.replace("\n", "").replace("[","").replace("]", "").replace("\'", "")
 		outputArray = line.split(", ")
 		if (customerList[count] in outputArray):
-			print outputArray[0] + " \t\t\t\t\t" + outputArray[1] + " \t\t\t\t\t" + outputArray[2]
+			print outputArray[1] + " \t\t\t\t\t" + outputArray[0] + " \t\t\t\t\t$" + outputArray[2]
 	count = count + 1
 
 
@@ -261,7 +262,7 @@ for line in lines:
 	if balanceSorted[0] in line:
 		accountMaxCustomer = outputArray[0]
 		maxCustomer = outputArray[1]
-print maxCustomer + " \t\t\t\t\t" + accountMaxCustomer + " \t\t\t\t\t" + balanceMax
+print maxCustomer + " \t\t\t\t\t" + accountMaxCustomer + " \t\t\t\t\t$" + balanceMax
 
 print """
 Report of Accounts with Minimum Balance
@@ -275,7 +276,7 @@ for line in lines:
 	if balanceSorted[0] in line:
 		accountMinCustomer = outputArray[0]
 		minCustomer = outputArray[1]
-print minCustomer + " \t\t\t\t\t" + accountMinCustomer + " \t\t\t\t\t" + balanceMin
+print minCustomer + " \t\t\t\t\t" + accountMinCustomer + " \t\t\t\t\t$" + balanceMin
 
 print "Average of Accounts Balances is: $" + str(averageBalance)
 print "Total Bank Gross Earnings: $" + str(bankEarnings)
