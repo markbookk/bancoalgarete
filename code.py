@@ -3,15 +3,12 @@ Banco Algarete
 Marcos O. Nieves Rivera
 Section M J 3:30 - 4:30
 
-To-do:
-- Fix strings and description
-+ format zeroessss
-+ switch files strings to lists
-- bank account
-- fix only to two decimals
-
-Example:
-O, Abarrito Smith, 1000.00
+NOTE (for Github users not professor):
+I made this program with the intention that the program could always work as a real bank account.
+Meaning that even when you close the program, everything is saved into the text file. That wasn't the full
+intention of the class proyect so for that reason, the last line replaces the file format needed
+to work even when the program closes. To use this program as a real bank account just remove the last line
+and just type all of the new commands you want on the file named 'alghistorical.txt'.
 '''
 
 import sys
@@ -63,12 +60,25 @@ def changeToArray(lineArray):
 		formattedS = ast.literal_eval(s)
 		mainArray.append(formattedS)
 
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
+
 
 #################
 
-print "Enter the input:"
-input_ = raw_input("")
-inputArray = input_.split(", ")
+# print "Enter the input:"
+# input_ = raw_input("")
+# inputArray = input_.split(", ")
+
 overwriteTxt(fileC, "")
 
 try:
@@ -197,10 +207,7 @@ for line in linesInFile:
 print """
  				---------  AL GARETE BANK HISTORICAL REPORT  ---------
 Report of Bank Accounts Ordered by Account Numbers
-
-
-Account Number 					Customer Name 					Balance
-"""
+""" + color.BOLD + color.UNDERLINE + """Account Number""" + color.END +  """ 					""" + color.BOLD + color.UNDERLINE + """Customer Name""" + color.END + """ 					""" + color.BOLD + color.UNDERLINE + """Balance""" + color.END
 try:
 	fp = open(fileC)
 except:
@@ -218,17 +225,18 @@ customerList = sorted(customerList)
 
 print """
 Report of Bank Accounts Ordered by Names of Owners
-Customers 					Account Number 					Balance"""
-
+""" + color.BOLD + color.UNDERLINE + """Customer Name""" + color.END +  """ 					""" + color.BOLD + color.UNDERLINE + """Account Number""" + color.END + """ 					""" + color.BOLD + color.UNDERLINE + """Balance""" + color.END
 
 sortedCustomerList = []
 count = 0
+finalOutput = ""
 while (count < len(customerList)):
 	for line in lines:
 		line = line.replace("\n", "").replace("[","").replace("]", "").replace("\'", "")
 		outputArray = line.split(", ")
 		if (customerList[count] in outputArray):
 			print outputArray[1] + " \t\t\t\t\t" + outputArray[0] + " \t\t\t\t\t$" + outputArray[2]
+			finalOutput = finalOutput + outputArray[1] + ", " + outputArray[0] + ", " + outputArray[2] + "\n"
 	count = count + 1
 
 
@@ -238,7 +246,7 @@ while (count < len(customerList)):
 
 print """
 Report of Bank Accounts Ordered by Names of Owners
-Account Number 					Customer Name 					Balance"""
+""" + color.BOLD + color.UNDERLINE + """Customer Name""" + color.END +  """ 					""" + color.BOLD + color.UNDERLINE + """Account Number""" + color.END + """ 					""" + color.BOLD + color.UNDERLINE + """Balance""" + color.END
 
 largestBalance = 0
 balanceSorted = []
@@ -266,7 +274,7 @@ print maxCustomer + " \t\t\t\t\t" + accountMaxCustomer + " \t\t\t\t\t$" + balanc
 
 print """
 Report of Accounts with Minimum Balance
-Customer Name 					Account Number 					Balance"""
+""" + color.BOLD + color.UNDERLINE + """Customer Name""" + color.END +  """ 					""" + color.BOLD + color.UNDERLINE + """Account Number""" + color.END + """ 					""" + color.BOLD + color.UNDERLINE + """Balance""" + color.END
 balanceSorted = sorted(balanceSorted, key=float)
 balanceMin = balanceSorted[0]
 
@@ -281,3 +289,5 @@ print minCustomer + " \t\t\t\t\t" + accountMinCustomer + " \t\t\t\t\t$" + balanc
 print "Average of Accounts Balances is: $" + str(averageBalance)
 print "Total Bank Gross Earnings: $" + str(bankEarnings)
 print "Average of Accounts Balances is: $" + str(bonusPaid)
+print " 				---------  END OF HISTORICAL REPORT  ---------"""
+overwriteTxt(fileC, finalOutput)
