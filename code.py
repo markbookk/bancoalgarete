@@ -124,7 +124,8 @@ for line in linesInFile:
 		accNumber = int(inputArray[1])
 		amountMoney = float(inputArray[2])
 		amountSubtracted = amountMoney*0.05
-		amountMoney = amountMoney + amountSubtracted
+		amountSubtracted = float("{0:.2f}".format(amountSubtracted))
+		#amountMoney = amountMoney + amountSubtracted
 		bankEarnings = bankEarnings + amountSubtracted
 
 		try:
@@ -155,6 +156,7 @@ for line in linesInFile:
 		accNumber = int(inputArray[1])
 		amountMoney = float(inputArray[2])
 		amountSubtracted = amountMoney*0.05
+		amountSubtracted = float("{0:.2f}".format(amountSubtracted))
 		amountMoney = amountMoney - amountSubtracted
 		bankEarnings = bankEarnings + amountSubtracted
 		try:
@@ -163,6 +165,9 @@ for line in linesInFile:
 			writeToTxt(fileC, "")
 		lines = fp.readlines()
 		#linesAmount = 0
+
+		lineCArray = []
+		mainArray = []
 		for line in lines:
 			#linesAmount = linesAmount + 1
 			lineCArray.append(line)#Creates a list with all the bank accounts with its format.
@@ -186,11 +191,14 @@ for line in linesInFile:
 			writeToTxt(fileC, "")
 		lines = fp.readlines()
 		linesAmount = 0
+		bonusSum = 0
 		for line in lines:
 			dividedLine = line.split(", ")
 			dividedLine[2] = dividedLine[2].replace("]", "") #This takes out the character to get integer
-			dividedLine[2] = str(float(dividedLine[2]) + (float(dividedLine[2]) * (bonus/100)))
-			bonusPaid = bonusPaid + (float(dividedLine[2]) * (bonus/100))
+			bonusSum = float(dividedLine[2]) * (bonus/100)
+			bonusSum = float("{0:.2f}".format(bonusSum))
+			dividedLine[2] = str(float(dividedLine[2]) + bonusSum)
+			bonusPaid = bonusPaid + bonusSum
 			dividedLine[2] = dividedLine[2] + "]\n" #Adds character taken
 			dividedLine = ", ".join(dividedLine)
 			inplace_change(fileC, line, dividedLine)
@@ -217,7 +225,7 @@ customerList = []
 for line in lines:
 	line = line.replace("\n", "").replace("[","").replace("]", "").replace("\'", "")
 	outputArray = line.split(", ")
-	print outputArray[0] + " \t\t\t\t\t" + outputArray[1] + " \t\t\t\t\t$" + outputArray[2]
+	print outputArray[0] + " \t\t\t\t\t" + outputArray[1] + " \t\t\t\t\t$" + ("%.2f" % float(outputArray[2]))
 	#Add to 'customerList[]' all of the customer names to sort.
 	customerList.append(outputArray[1])
 	#print '%s \t\t\t\t\t%s \t\t\t\t\t%s \t\t\t\t\t' % (outputArray[0], outputArray[1], outputArray[2])
@@ -235,8 +243,8 @@ while (count < len(customerList)):
 		line = line.replace("\n", "").replace("[","").replace("]", "").replace("\'", "")
 		outputArray = line.split(", ")
 		if (customerList[count] in outputArray):
-			print outputArray[1] + " \t\t\t\t\t" + outputArray[0] + " \t\t\t\t\t$" + outputArray[2]
-			finalOutput = finalOutput + outputArray[1] + ", " + outputArray[0] + ", " + outputArray[2] + "\n"
+			print outputArray[1] + " \t\t\t\t\t" + outputArray[0] + " \t\t\t\t\t$" + ("%.2f" % float(outputArray[2]))
+			finalOutput = finalOutput + outputArray[1] + ", " + outputArray[0] + ", " + ("%.2f" % float(outputArray[2])) + "\n"
 	count = count + 1
 
 
@@ -270,7 +278,7 @@ for line in lines:
 	if balanceSorted[0] in line:
 		accountMaxCustomer = outputArray[0]
 		maxCustomer = outputArray[1]
-print maxCustomer + " \t\t\t\t\t" + accountMaxCustomer + " \t\t\t\t\t$" + balanceMax
+print maxCustomer + " \t\t\t\t\t" + accountMaxCustomer + " \t\t\t\t\t$" + ("%.2f" % float(balanceMax))
 
 print """
 Report of Accounts with Minimum Balance
@@ -284,10 +292,10 @@ for line in lines:
 	if balanceSorted[0] in line:
 		accountMinCustomer = outputArray[0]
 		minCustomer = outputArray[1]
-print minCustomer + " \t\t\t\t\t" + accountMinCustomer + " \t\t\t\t\t$" + balanceMin
+print minCustomer + " \t\t\t\t\t" + accountMinCustomer + " \t\t\t\t\t$" + ("%.2f" % float(balanceMin))
 
-print "Average of Accounts Balances is: $" + str(averageBalance)
-print "Total Bank Gross Earnings: $" + str(bankEarnings)
-print "Average of Accounts Balances is: $" + str(bonusPaid)
+print "Average of Accounts Balances is: $" + ("%.2f" % averageBalance)
+print "Total Bank Gross Earnings: $" + ("%.2f" % bankEarnings)
+print "Total Bonus Paid: $" + ("%.2f" % bonusPaid)
 print " 				---------  END OF HISTORICAL REPORT  ---------"""
-overwriteTxt(fileC, finalOutput)
+#overwriteTxt(fileC, finalOutput)
