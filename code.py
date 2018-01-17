@@ -9,6 +9,7 @@ Meaning that even when you close the program, everything is saved into the text 
 intention of the class proyect so for that reason, the last line replaces the file format needed
 to work even when the program closes. To use this program as a real bank account just remove the last line
 and just type all of the new commands you want on the file named 'alghistorical.txt'.
+That is the reason why there is more lines of code than you would normally use if you didn't save everytime.
 '''
 
 import sys
@@ -18,23 +19,42 @@ import os
 os.system("clear")
 
 
-formatString = "\t\t----------AL GARETE BANK HISTORICAL REPORT----------\nReport of Bank Accounts oRdered by Account Numbers"
+formatString = "\t\t----------ALGARETE BANK HISTORICAL REPORT----------\nReport of Bank Accounts oRdered by Account Numbers"
 fileH = "alghistorical.txt"
 fileC = "algcustomers.txt"
 lineCArray = []
 bankEarnings = 0
 bonusPaid = 0
 
+'''
+Function to write into a text file more easily
+PARAMS:
+	file: name of file to edit; string
+	string: string to write into file; string
+'''
 def writeToTxt(file, string):
 	text_file = open(file, "a")
 	text_file.write(string)
 	text_file.close()
 
+'''
+Function to overwrite and delete previous strings into a text file more easily
+PARAMS:
+	file: name of file to edit; string
+	string: string to write into file; string
+'''
 def overwriteTxt(file, string):
 	text_file = open(file, "w+")
 	text_file.write(string)
 	text_file.close()
 
+'''
+Function to replace a string inside a file with a new string
+PARAMS:
+	filename: name of file to edit; string
+	old_string: previous string you want replaced; string
+	new_string: new string you want to replace old string; string
+'''
 def inplace_change(filename, old_string, new_string):
     # Safely read the input filename using 'with'
     with open(filename) as f:
@@ -49,6 +69,11 @@ def inplace_change(filename, old_string, new_string):
         s = s.replace(old_string, new_string)
         f.write(s)
 
+'''
+Function to write into a text file more easily
+PARAMS:
+	lineArray: name of list which will be converted to a new list called mainArray but formatted accordingly.
+'''
 mainArray = []
 def changeToArray(lineArray):
 	#Get the list size so we can get the last item in the list (another list) and convert to string.
@@ -60,6 +85,7 @@ def changeToArray(lineArray):
 		formattedS = ast.literal_eval(s)
 		mainArray.append(formattedS)
 
+#This is just a simple class to be able to get colors and formats easily.
 class color:
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -84,14 +110,14 @@ overwriteTxt(fileC, "")
 try:
 	file_ = open(fileH)
 except:
-	print "ERROR! FILE '" + fileC + "' NOT FOUND! Closing program..."
+	print "ERROR! FILE '" + fileH + "' NOT FOUND! Closing program..."
 	time.sleep(3)
 	sys.exit()
 linesInFile = file_.readlines()
 for line in linesInFile:
 	inputArray = line.split(", ")
 
-	print line
+	#print line
 	#time.sleep(3)
 
 	if (line.lower().startswith("o")):
@@ -213,7 +239,7 @@ for line in linesInFile:
 		#time.sleep(5)
 
 print """
- 				---------  AL GARETE BANK HISTORICAL REPORT  ---------
+ 				---------  ALGARETE BANK HISTORICAL REPORT  ---------
 Report of Bank Accounts Ordered by Account Numbers
 """ + color.BOLD + color.UNDERLINE + """Account Number""" + color.END +  """ 					""" + color.BOLD + color.UNDERLINE + """Customer Name""" + color.END + """ 					""" + color.BOLD + color.UNDERLINE + """Balance""" + color.END
 try:
@@ -294,8 +320,9 @@ for line in lines:
 		minCustomer = outputArray[1]
 print minCustomer + " \t\t\t\t\t" + accountMinCustomer + " \t\t\t\t\t$" + ("%.2f" % float(balanceMin))
 
+print ""
 print "Average of Accounts Balances is: $" + ("%.2f" % averageBalance)
 print "Total Bank Gross Earnings: $" + ("%.2f" % bankEarnings)
 print "Total Bonus Paid: $" + ("%.2f" % bonusPaid)
 print " 				---------  END OF HISTORICAL REPORT  ---------"""
-#overwriteTxt(fileC, finalOutput)
+overwriteTxt(fileC, finalOutput)
